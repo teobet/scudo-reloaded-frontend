@@ -1,7 +1,7 @@
 import {
     Tabs,
     TabList,
-     Tab,
+    Tab,
     Divider, 
     Box 
 } from '@chakra-ui/react'

@@ -1,5 +1,12 @@
-import { Card, Divider, CardHeader,useColorMode, CardBody, CardFooter,IconButton , Heading, CircularProgress, CircularProgressLabel,Flex,Spacer,Stack,Center,Box } from '@chakra-ui/react'
-
+import { 
+    Card, 
+    CardBody, 
+    Heading, 
+    CircularProgress, 
+    CircularProgressLabel,
+    Flex,
+    Center
+} from '@chakra-ui/react'
 
 export default function DataCard(props:{title:string, value:number, type:string}){
 
