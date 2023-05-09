@@ -4,8 +4,8 @@ import { Card, Divider, CardHeader,useColorMode, CardBody, CardFooter,IconButton
 export default function DataCard(props:{title:string, value:number, type:string}){
 
     return(
-        <>
-        <Card size={'lg'} width={'sm'} boxShadow={'2 2 2 #000'}>    
+    <>
+        <Card size={'lg'} width={'sm'} shadow={'lg'}>    
             <CardBody>
                 <Flex gap={5}>
                     <CircularProgress value={props.value} color='green.400' thickness='10px' size='80px'>
@@ -17,6 +17,6 @@ export default function DataCard(props:{title:string, value:number, type:string}
                 </Flex>
             </CardBody>
         </Card>
-        </>
+    </>
     )
 }
