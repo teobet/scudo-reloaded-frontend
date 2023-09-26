@@ -6,7 +6,8 @@ import {
     Flex, 
     Box, 
     Wrap, 
-    Center 
+    Center,
+    Badge
 } from '@chakra-ui/react'
 import DataCard from './components/DataCard'
 import UpperBar from './components/UpperBar'
@@ -14,100 +15,42 @@ import UpperBar from './components/UpperBar'
 import umidi from './icons/water.png'
 import temp from './icons/temp.png'
 import light from './icons/light.png'
+import CurrentPanel from './components/Current'
 
 export default function App() {
     const [activeup, setActiveup]= React.useState<number>(0)
+    const [time, setTime]= React.useState(0)
     const [activeside, setActiveside] = React.useState<number>(0)
-
-    /*function sidecard(active:number) {
-
-        switch (active) {
-            case 0:
-                return(
-                    <>
-                    <DataCard title={'Caio'} value={40} type={'°'} />
-                    <DataCard title={'Caio'} value={80} type={'%'} />
-                    <DataCard title={'Caio'} value={80} type={'%'} />
-                    </>
-                )
-        
-            case 1:
-                return(
-                    <DataCard title={'Caio'} value={40} type={'%'} />
-                )
-        }
-    }*/
-
-    /*function stat(active:number) {
-
-        switch (active) {
-            case 0:
-                return(
-                    <>
-
-                    <Flex flex={'1 1 auto'}>
-                <SideBar callback={setActiveside} ></SideBar>
-
-                {activeside}
-                <Box p={'5'}>
-                    <Center>
-                        <Wrap  p={5} justify={'center'}>
-                            {sidecard(activeside)}
-                        </Wrap>
-                    </Center>
-                </Box>
-            </Flex>
-                    </>
-                )
-        
-            case 1:
-                return(
-                    <>
-                    <Flex flex={'1 1 auto'}>
-                <SideBar callback={setActiveside} ></SideBar>
-
-                {activeside}
-                <Box p={'5'}>
-                    <Center>
-                        <Wrap  p={5} justify={'center'}>
-                            {sidecard(activeside)}
-                        </Wrap>
-                    </Center>
-                </Box>
-            </Flex>
-                    </>
-                    
-                )
-        }
-    }*/
+    const [boards,setBoards] = React.useState<Array<string>>([])
+    //const [activeboard,setactiveboard] = React.useState<string>([])
+    React.useEffect(()=>{
+        fetch('https://api.scudoreloaded.it/boards/')
+        .then(res=>res.json())
+        .then(data=>setBoards(data))
+    },[])
+    const [currents,setCurrents] = React.useState<any>({})
+    React.useEffect(()=>{
+        fetch(`https://api.scudoreloaded.it/current/${boards[activeup]}`)
+        .then(res=>res.json())
+        .then(data=>{setCurrents(data); console.log(data)})
+    },[boards,activeup])
 
     return (
     <ChakraProvider>
         <Flex flexDirection={'column'} height={'100vh'}>
             <NavBar></NavBar>
-            <UpperBar callback={setActiveup}></UpperBar>
-            {activeup}
-            {activeside}
-            {/* {activeup} */}
-            {/* {stat(activeup)} */}
+            <UpperBar callback={setActiveup} boards={boards}></UpperBar>
             <Flex flex={'1 1 auto'}>
                 <SideBar callback={setActiveside} ></SideBar>
 
-                {/* {activeside} */}
                 <Box p={'5'} paddingLeft={20} paddingTop={10}>
-                    <Center>
                         <Wrap spacing={30} p={5} justify={'center'}>
-                        <DataCard title={'Temperatura'} value={20} type={'°'} max={40} color={'red.400'} img={temp}/>
-                        <DataCard title={'Luminosità'} value={80} type={'%'} max={100} color={'yellow.400'} img={light}/>
-                        </Wrap>
-                    </Center>
-                    <Center p={'10'}>
-                        <DataCard title={'Umidità'} value={40} type={'%'} max={100} color={'blue.400'} img={umidi}/>
-                    </Center>
-                    
+                        <CurrentPanel boardname={boards[activeup]} callback={setTime}></CurrentPanel>
+                        </Wrap> 
                 </Box>
             </Flex>
         </Flex>
+        {Date.now()/1000-time<4? <Badge color="green" position={'absolute'} size={'lg'} bottom={'30px'} left={'90px'}>Updating</Badge>:<Badge position={'absolute'} size={'lg'} bottom={'30px'} left={'20px'}>Last update {new Date(time *1000).toLocaleString()}</Badge>}
     </ChakraProvider>
     )
 }

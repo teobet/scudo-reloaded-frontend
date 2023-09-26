@@ -3,7 +3,8 @@ import {
     TabList,
     Tab,
     Divider, 
-    Box 
+    Box,
+    Badge
 } from '@chakra-ui/react'
 
 export default function SideBar(props:{callback:Function}){
