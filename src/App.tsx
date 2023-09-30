@@ -1,16 +1,18 @@
 import * as React from 'react'
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
-import { 
+import {
     ChakraProvider,
-    Flex, 
-    Box, 
-    Wrap, 
+    Flex,
+    Box,
+    Wrap,
     Center,
-    Badge
+    Badge,
+    Grid
 } from '@chakra-ui/react'
 import DataCard from './components/DataCard'
 import UpperBar from './components/UpperBar'
+import History from './components/History'
 
 import umidi from './icons/water.png'
 import temp from './icons/temp.png'
@@ -34,6 +36,7 @@ export default function App() {
         .then(res=>res.json())
         .then(data=>{setCurrents(data); console.log(data)})
     },[boards,activeup])
+    const [history,setHistory] = React.useState<any>({})
 
     return (
     <ChakraProvider>
@@ -42,15 +45,16 @@ export default function App() {
             <UpperBar callback={setActiveup} boards={boards}></UpperBar>
             <Flex flex={'1 1 auto'}>
                 <SideBar callback={setActiveside} ></SideBar>
-
-                <Box p={'5'} paddingLeft={20} paddingTop={10}>
-                        <Wrap spacing={30} p={5} justify={'center'}>
-                        <CurrentPanel boardname={boards[activeup]} callback={setTime}></CurrentPanel>
-                        </Wrap> 
-                </Box>
+                <Grid p={'5'} alignContent={"center"}>
+                        {activeside===0?<CurrentPanel boardname={boards[activeup]}></CurrentPanel>:<History boardname={boards[activeup]}></History>}
+                </Grid>
             </Flex>
         </Flex>
-        {Date.now()/1000-time<4? <Badge color="green" position={'absolute'} size={'lg'} bottom={'30px'} left={'90px'}>Updating</Badge>:<Badge position={'absolute'} size={'lg'} bottom={'30px'} left={'20px'}>Last update {new Date(time *1000).toLocaleString()}</Badge>}
     </ChakraProvider>
     )
+
+
+
+
+    /*[{history:[{data:{light,temperature,humidity},time:3555},{},{}] ,name:Sala]*/
 }

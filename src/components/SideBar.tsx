@@ -17,7 +17,7 @@ export default function SideBar(props:{callback:Function}){
                     <Tab>Current</Tab>
                     <Tab>History</Tab>
                 </TabList>
-            </Tabs>
+            </Tabs> 
         </Box>
         <Divider orientation={'vertical'}></Divider>
     </>
