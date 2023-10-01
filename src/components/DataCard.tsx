@@ -21,13 +21,12 @@ export default function DataCard(props:{dim?:string,title:string, value:number, 
                         <CircularProgressLabel>{
                             props.spinning?
                             "":
-                            props.value+props.type
+                            (Math.round(props.value*10)/10)+props.type
                         }</CircularProgressLabel>
                     </CircularProgress>
                     <Center>
                         <Heading size={'lg'}>{props.title}</Heading>
                     </Center>
-                    <Image paddingLeft={10}/> 
                 </Flex>
             </CardBody>
         </Card>

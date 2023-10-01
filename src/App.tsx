@@ -16,11 +16,12 @@ export default function App() {
     const [boards,setBoards] = React.useState<Array<string>>([])
     //const [activeboard,setactiveboard] = React.useState<string>([])
     React.useEffect(()=>{
-        return () => {
-            fetch('https://api.scudoreloaded.it/boards/')
-                .then(res=>res.json())
-                .then(data=>setBoards(data))
-        }
+        fetch('https://api.scudoreloaded.it/boards/')
+            .then(res=>res.json())
+            .then(data=>setBoards(data))
+            .catch(
+                console.error
+            )
     },[])
     return (
     <ChakraProvider>

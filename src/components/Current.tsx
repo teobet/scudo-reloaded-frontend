@@ -69,8 +69,8 @@ export default function CurrentPanel(props:{boardname:string}){
               }
             <Box>
               {retrieved?
-                  (now-time)<4?
-                  <Badge p={1} bg="green.400" size={'xl'}>Updating</Badge>:
+                  (now-time)<8?
+                  <Badge color={'white'} p={1} bg="green.400" size={'xl'}>Updating</Badge>:
                   (now-time)<60?
                   <Badge p={1} size={'300vh'}>Last update {Math.floor(now-time)} seconds ago</Badge>:
                   <Badge p={1} size={'300vh'}>Last update {new Date(time *1000).toLocaleString()}</Badge>:
@@ -81,9 +81,9 @@ export default function CurrentPanel(props:{boardname:string}){
           </Wrap>
         </CardHeader>
       <Wrap spacing={30} p={5} justify={'center'}>
-        <DataCard title={'Temperatura'} value={temperature} type={'°'} max={50} color={'red.400'} spinning={!retrieved}/>
-        <DataCard title={'Luminosità'} value={luminosity} type={'%'} max={100} color={'yellow.400'} spinning={!retrieved}/>
-        <DataCard title={'Umidità'} value={humidity} type={'%'} max={100} color={'blue.400'} spinning={!retrieved}/>
+        <DataCard title={'Temperature'} value={temperature} type={'°'} max={50} color={'red.400'} spinning={!retrieved}/>
+        <DataCard title={'Luminosity'} value={luminosity} type={'%'} max={100} color={'yellow.400'} spinning={!retrieved}/>
+        <DataCard title={'Humidity'} value={humidity} type={'%'} max={100} color={'blue.400'} spinning={!retrieved}/>
       </Wrap>
     </Card>
     )
