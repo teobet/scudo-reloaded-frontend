@@ -3,7 +3,6 @@ import {
   CardHeader,
   Heading,
   Skeleton,
-  Flex,
   Text,
   Badge,
   Wrap, 
@@ -20,18 +19,17 @@ export default function CurrentPanel(props:{boardname:string}){
     const [now,setNow] = useState(0)
 
   React.useEffect(()=>{
-    if(!props.boardname)return
-    fetch(`https://api.scudoreloaded.it/current/${props.boardname}`)
-        .then(res=>res.json())
-        .then(data=>{
-          setTemperature(data.data.temperature)
-          setLuminosity(data.data.light)
-          setHumidity(data.data.humidity)
-          setTime(data.data.time)
-          setNow(Date.now()/1000)
-          setRetrieved(true)
-        })
-    let interval=
+    if(props.boardname!==undefined){
+      fetch(`https://api.scudoreloaded.it/current/${props.boardname}`)
+          .then(res=>res.json())
+          .then(data=>{
+            setTemperature(data.data.temperature)
+            setLuminosity(data.data.light)
+            setHumidity(data.data.humidity)
+            setTime(data.data.time)
+            setNow(Date.now()/1000)
+            setRetrieved(true)})
+      let interval=
       setInterval(() => {
         fetch(`https://api.scudoreloaded.it/current/${props.boardname}`)
         .then(res=>res.json())
@@ -42,11 +40,14 @@ export default function CurrentPanel(props:{boardname:string}){
           setTime(data.data.time)
           setNow(Date.now()/1000)
         })
-      }, 4000);
+      }, 10000);
 
-    return () => clearInterval(interval)
-
-  },[props.boardname,time])
+      return () => {
+        clearInterval(interval)
+      }    
+    }
+    else return
+  },[props.boardname])
     return(
       <Card p={10} height={"fit-content"} shadow={'lg'}>
         <CardHeader>
@@ -75,10 +76,6 @@ export default function CurrentPanel(props:{boardname:string}){
                   <Badge p={1} size={'300vh'}>Last update {new Date(time *1000).toLocaleString()}</Badge>:
                   <Skeleton><Badge>jjjjhhhhhhhhjjjjjjjjjj</Badge></Skeleton>
             }
-            {/*retrieved?
-              now-time:
-              <Skeleton><Badge>jjjjhhhhhhhhjjjjjjjjjj</Badge></Skeleton>
-          */}
               
             </Box>
           </Wrap>
