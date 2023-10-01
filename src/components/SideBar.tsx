@@ -3,7 +3,8 @@ import {
     TabList,
     Tab,
     Divider, 
-    Box 
+    Box,
+    Badge
 } from '@chakra-ui/react'
 
 export default function SideBar(props:{callback:Function}){
@@ -11,12 +12,12 @@ export default function SideBar(props:{callback:Function}){
     return(
     <>
         <Box p={5} minWidth={'15vw'}>
-            <Tabs justifyContent={'end'} defaultIndex={0} variant={'soft-rounded'} orientation={'vertical'} onChange={(index)=>props.callback(index)}> 
+            <Tabs size={'lg'} justifyContent={'end'} defaultIndex={0} variant={'soft-rounded'} orientation={'vertical'} onChange={(index)=>props.callback(index)}> 
                 <TabList gap={5} alignItems={'end'}>
                     <Tab>Current</Tab>
                     <Tab>History</Tab>
                 </TabList>
-            </Tabs>
+            </Tabs> 
         </Box>
         <Divider orientation={'vertical'}></Divider>
     </>
